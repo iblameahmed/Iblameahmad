@@ -1,0 +1,145 @@
+-- ===== ONE KEY SYSTEM ONLY (ANTI DUPLICATE) =====
+if getgenv().SL_SINGLE_KEY then return end
+getgenv().SL_SINGLE_KEY = true
+
+repeat task.wait() until game:IsLoaded()
+pcall(function()
+    settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+    settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level01
+    settings().Rendering.EagerBulkExecution = false
+end)
+
+pcall(function()
+    game:GetService("Workspace").StreamingEnabled = true
+end)
+-- ===== SERVICES =====
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+-- ===== KEYS =====
+local NORMAL_KEY = "INFONTOP"
+local PAID_KEY   = "PAIDGJSP1"
+local LOS_KEY  = "GHOSTXINF"
+
+-- ===== LOADERS =====
+local NORMAL_LOADER = "https://junk-code-security--seyxn.replit.app/raw/8xzjgpcwc6ytqr598f78zf"
+local PAID_LOADER   = "https://junk-code-security--seyxn.replit.app/raw/azye54zw4ih9htrr147dfb"
+local LOS_LOADER  = "https://raw.githubusercontent.com/SlGHOST0/SL-HUB-PUBLIC/refs/heads/main/beta.txt"
+
+local GET_KEY_LINK = "https://discord.gg/ER9CdPYrVR"
+getgenv().KEY_TYPE = nil
+
+-- ===== GUI =====
+local Gui = Instance.new("ScreenGui", game.CoreGui)
+Gui.Name = "SL_KEY_SYSTEM"
+Gui.ResetOnSpawn = false
+
+local Main = Instance.new("Frame", Gui)
+Main.Size = UDim2.new(0,360,0,230)
+Main.Position = UDim2.new(0.5,-180,0.5,-115)
+Main.BackgroundColor3 = Color3.fromRGB(15,15,15)
+Main.BorderSizePixel = 0
+Main.Active = true
+Main.Draggable = true
+Instance.new("UICorner", Main)
+
+local Stroke = Instance.new("UIStroke", Main)
+Stroke.Thickness = 2
+
+-- ===== RGB EFFECT =====
+local hue = 0
+RunService.RenderStepped:Connect(function()
+	hue = (hue + 0.002) % 1
+	local rgb = Color3.fromHSV(hue,1,1)
+	Stroke.Color = rgb
+end)
+
+-- ===== TITLE =====
+local Title = Instance.new("TextLabel", Main)
+Title.Size = UDim2.new(1,0,0,45)
+Title.BackgroundTransparency = 1
+Title.Text = "INFINTIE HUB KEY SYSTEM"
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+
+RunService.RenderStepped:Connect(function()
+	Title.TextColor3 = Color3.fromHSV(hue,1,1)
+end)
+
+-- ===== TEXTBOX =====
+local Box = Instance.new("TextBox", Main)
+Box.Size = UDim2.new(0.85,0,0,40)
+Box.Position = UDim2.new(0.075,0,0.35,0)
+Box.PlaceholderText = "ENTER KEY"
+Box.Text = ""
+Box.Font = Enum.Font.Gotham
+Box.TextSize = 14
+Box.BackgroundColor3 = Color3.fromRGB(25,25,25)
+Instance.new("UICorner", Box)
+
+RunService.RenderStepped:Connect(function()
+	Box.TextColor3 = Color3.fromHSV(hue,1,1)
+end)
+
+-- ===== BUTTON CREATOR =====
+local function RGBButton(text,pos)
+	local btn = Instance.new("TextButton", Main)
+	btn.Size = UDim2.new(0.4,0,0,36)
+	btn.Position = pos
+	btn.Text = text
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 14
+	btn.BackgroundColor3 = Color3.fromRGB(30,30,30)
+	Instance.new("UICorner", btn)
+
+	RunService.RenderStepped:Connect(function()
+		btn.TextColor3 = Color3.fromHSV(hue,1,1)
+	end)
+
+	return btn
+end
+
+local Verify = RGBButton("VERIFY", UDim2.new(0.075,0,0.65,0))
+local GetKey = RGBButton("GET KEY", UDim2.new(0.525,0,0.65,0))
+
+-- ===== BUTTON LOGIC =====
+Verify.MouseButton1Click:Connect(function()
+	local key = string.upper(string.gsub(Box.Text,"%s+",""))
+
+	if key == NORMAL_KEY or key == PAID_KEY or key == LOS_KEY then
+		getgenv().KEY_TYPE = key
+		Gui:Destroy()
+	else
+		Box.Text = ""
+		Box.PlaceholderText = "WRONG KEY!"
+		TweenService:Create(Main,TweenInfo.new(0.1),{
+			Position = Main.Position + UDim2.new(0,6,0,0)
+		}):Play()
+		task.wait(0.1)
+		TweenService:Create(Main,TweenInfo.new(0.1),{
+			Position = Main.Position
+		}):Play()
+	end
+end)
+
+GetKey.MouseButton1Click:Connect(function()
+	if setclipboard then
+		setclipboard(GET_KEY_LINK)
+	end
+end)
+
+-- ===== WAIT FOR KEY =====
+repeat task.wait() until getgenv().KEY_TYPE
+
+-- ===== LOAD =====
+if getgenv().KEY_TYPE == NORMAL_KEY then
+	
+loadstring(game:HttpGet('https://raw.githubusercontent.com/SlGHOST0/SL-HUB-PUBLIC/refs/heads/main/Fish%20it%20(1).txt'))()
+elseif getgenv().KEY_TYPE == PAID_KEY then
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/SlGHOST0/SL-HUB-PUBLIC/refs/heads/main/INFINTIE%20HUB%20PAID.txt'))()
+elseif getgenv().KEY_TYPE == LOS_KEY then
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/SlGHOST0/SL-HUB-PUBLIC/refs/heads/main/Inf%20los.txt'))()
+end
